@@ -2,7 +2,6 @@
 """ Console Module """
 import cmd
 import sys
-import shlex
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -116,12 +115,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        
+        args = args.split()
         if not args:
             print("** class name missing **")
             return
-
-        args = shlex.split(args)
         """elif args not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return"""
@@ -135,13 +132,18 @@ class HBNBCommand(cmd.Cmd):
         for arg in args:
             if '=' in arg:
                 key, value =arg.split('=')
-                value = value.replace('_', ' ')
+                if value.startswith('"'):
+                    value = value[1:-1]
+                key = key.replace('_', ' ')
                 attributes[key] = value
+        if "state_id" not in attributes:
+            print("** state_id missing **")
+            return
         for k, v in attributes.items():
             setattr(new_instance, k, v)
+        storage.new(new_instance)
         storage.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -223,11 +225,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all(HBNBCommand.classes[args]).items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)

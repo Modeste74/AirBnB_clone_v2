@@ -62,7 +62,7 @@ class FileStorage:
                     cls_name = val['__class__']
                     cls = classes.get(cls_name)
                     if cls is not None:
-                        self.__objects[key] = cls(**value)
+                        self.__objects[key] = cls(**val)
                     """self.all()[key] = classes[val['__class__']](**val)"""
         except FileNotFoundError:
             pass
