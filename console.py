@@ -131,14 +131,9 @@ class HBNBCommand(cmd.Cmd):
         attributes = {}
         for arg in args:
             if '=' in arg:
-                key, value =arg.split('=')
-                if value.startswith('"'):
-                    value = value[1:-1]
+                key, value = arg.split('=')
                 key = key.replace('_', ' ')
                 attributes[key] = value
-        if "state_id" not in attributes:
-            print("** state_id missing **")
-            return
         for k, v in attributes.items():
             setattr(new_instance, k, v)
         storage.new(new_instance)
@@ -338,6 +333,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

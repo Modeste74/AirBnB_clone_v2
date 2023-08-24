@@ -47,7 +47,7 @@ class BaseModel:
         storage.new(self)
         storage.save()
 
-    def to_dict(self):
+    '''def to_dict(self):
         """Convert instance into dict format"""
         dictionary = {}
         dictionary.update(self.__dict__)
@@ -61,7 +61,16 @@ class BaseModel:
         """dictionary['__class__'] = self.__class__.__name__
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()"""
-        return dictionary
+        return dictionary'''
+
+    def to_dict(self):
+        new_dict = self.__dict__.copy()
+        if '_sa_instance_state' in new_dict:
+            del new_dict['_sa_instance_state']
+        new_dict['created_at'] = self.created_at.isoformat()
+        new_dict['updated_at'] = self.updated_at.isoformat()
+        new_dict['__class__'] = self.__class__.__name__
+        return new_dict
 
     def delete(self):
         """deletes the current instance from storage"""

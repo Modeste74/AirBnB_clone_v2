@@ -29,7 +29,7 @@ class DBStorage:
                 pool_pre_ping=True)
         if environ.get('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
-    
+
     def all(self, cls=None):
         """Queries all objs in database"""
         classes = (User, City, Place, State, Amenity, Review)
@@ -42,7 +42,7 @@ class DBStorage:
         obj_dict = {}
         for obj in objs:
             key = "{}.{}".format(obj.__class__.__name__, obj.id)
-            obj_dict[key] =obj
+            obj_dict[key] = obj
         return obj_dict
 
     def new(self, obj):
