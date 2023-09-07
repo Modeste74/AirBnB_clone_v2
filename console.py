@@ -131,10 +131,16 @@ class HBNBCommand(cmd.Cmd):
         attributes = {}
         for arg in args:
             if '=' in arg:
-                key, value = arg.split('=')
-                key = key.replace('_', ' ')
+                key, value =arg.split('=')
                 attributes[key] = value
         for k, v in attributes.items():
+            if v.startswith('"'):
+                v = v[1:-1]
+                v = v.replace('_', ' ')
+            elif '.' in v:
+                v = float(v)
+            else:
+                value = int(v)
             setattr(new_instance, k, v)
         storage.new(new_instance)
         storage.save()
@@ -333,7 +339,6 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
-
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()

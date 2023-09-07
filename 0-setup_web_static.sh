@@ -17,7 +17,7 @@ rm -f /data/web_static/current && ln -s /data/web_static/releases/test/ /data/we
 sudo chown -R ubuntu:ubuntu /data/
 
 # updating the nginx config file to serve the content 
-echo 'server {
+echo "server {
     listen 80 default_server;
     listen [::]:80 default_server;
     add_header X-Served-By $HOSTNAME;
@@ -35,9 +35,8 @@ echo 'server {
 
     error_page 404 /error_404.html;
     location / {
-        # First attempt to serve request as file, then
-        # as directory, then fall back to displaying a 404.
-        try_files $uri $uri/ =404;
+        root /var/www/html;
+        internal;
     }
-}' | sudo tee /etc/nginx/sites-available/default > /dev/null
+}" | sudo tee /etc/nginx/sites-available/default > /dev/null
 sudo service nginx restart

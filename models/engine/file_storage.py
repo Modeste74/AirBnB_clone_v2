@@ -18,10 +18,10 @@ class FileStorage:
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         if cls is None:
-            return FileStorage.__objects
+            return self.__objects
         else:
             list_of_objs = {}
-            for k, objs in FileStorage.__objects.items():
+            for k, objs in self.__objects.items():
                 if isinstance(objs, cls):
                     list_of_objs[k] = objs
             return list_of_objs
@@ -32,9 +32,9 @@ class FileStorage:
 
     def save(self):
         """Saves storage dictionary to file"""
-        with open(FileStorage.__file_path, 'w') as f:
+        with open(self.__file_path, 'w') as f:
             temp = {}
-            temp.update(FileStorage.__objects)
+            temp.update(self.__objects)
             for key, val in temp.items():
                 temp[key] = val.to_dict()
             json.dump(temp, f)
@@ -62,7 +62,7 @@ class FileStorage:
                     cls_name = val['__class__']
                     cls = classes.get(cls_name)
                     if cls is not None:
-                        self.__objects[key] = cls(**val)
+                        self.all()[key] = cls(**val)
                     """self.all()[key] = classes[val['__class__']](**val)"""
         except FileNotFoundError:
             pass
@@ -70,6 +70,6 @@ class FileStorage:
     def delete(self, obj=None):
         """deletes obj from __objects"""
         to_delete = obj.__class__.__name__ + '.' + obj.id
-        if obj is not None and to_delete in FileStorage.__objects:
-            del FileStorage.__objects[to_delete]
+        if obj is not None and to_delete in self.__objects:
+            del self.__objects[to_delete]
             self.save()
