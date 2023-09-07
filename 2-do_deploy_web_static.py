@@ -22,7 +22,7 @@ def do_deploy(archive_path):
     try:
         # Upload archive to /tmp/ directory on web server
         archive_name = os.path.basename(archive_path)
-        put(archive_path, f'/tmp/{archive_name}')
+        put(archive_path, '/tmp/{}'.format(archive_name))
         archive_no_ext = os.path.splitext(archive_name)[0]
 
         # Create the release folder
