@@ -12,12 +12,12 @@ def do_pack():
     """Packs the contents of web_static into a .tgz archive"""
     now = datetime.now()
     formatted_date = now.strftime("%Y%m%d%H%M%S")
-    arch_f = "web_static_" + formatted_date + ".tgz"
+    arch_f = "versions/web_static_" + formatted_date + ".tgz"
     local("mkdir -p versions")
-    result = local("tar -czvf versions/{} web_static".format(arch_f))
+    result = local("tar -czvf {} web_static".format(arch_f))
     if result.failed:
         return None
-    return "versions/" + arch_f
+    return arch_f
 
 
 def do_deploy(archive_path):
@@ -72,4 +72,9 @@ def deploy():
     archive_path = do_pack()
     if archive_path is None:
         return False
-    return do_deploy(archive_path)
+    for host in env.hosts:
+        env.host_string = host
+        result = do_deploy(archive_path)
+        if not result:
+            return False
+    return True
