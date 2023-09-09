@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 # installs nginx and configures it
-sudo apt update
-sudo apt -y install nginx
+apt update
+apt -y install nginx
 
 #creates folders
-sudo mkdir -p /data/web_static/releases/test/
-sudo mkdir -p /data/web_static/shared/
+mkdir -p /data/web_static/releases/test/
+mkdir -p /data/web_static/shared/
 
 # creates a HTML test file
 echo "Test html for hbnb_project" >> /data/web_static/releases/test/index.html
 
 # creates a symbolic link and deletes already exists and recreates it
-sudo rm -f /data/web_static/current && ln -s /data/web_static/releases/test/ /data/web_static/current
+rm -f /data/web_static/current && ln -s /data/web_static/releases/test/ /data/web_static/current
 
 # giving onwership to user and group
 sudo chown -R ubuntu:ubuntu /data/
