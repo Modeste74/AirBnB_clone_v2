@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # installs nginx and configures it
-sudo apt update
-sudo apt -y install nginx
+apt update
+apt -y install nginx
 
 #creates folders
 mkdir -p /data/web_static/releases/test/
 mkdir -p /data/web_static/shared/
 
 # creates a HTML test file
-echo "Test html for hbnb_project" > /var/www/html/index.html
+echo "Test html for hbnb_project" >> /data/web_static/releases/test/index.html
 
 # creates a symbolic link and deletes already exists and recreates it
 rm -f /data/web_static/current && ln -s /data/web_static/releases/test/ /data/web_static/current
