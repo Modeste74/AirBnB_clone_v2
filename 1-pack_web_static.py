@@ -18,7 +18,7 @@ def do_pack():
     now = datetime.now()
     formatted_date = now.strftime("%Y%m%d%H%M%S")
     arch_f = "web_static_" + formatted_date + ".tgz"
-    result = local(f"tar -czvf versions/{arch_f} web_static")
+    result = local("tar -czvf versions/{} web_static".format(arch_f))
     if result.failed:
         return None
     else:
