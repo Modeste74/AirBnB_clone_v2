@@ -73,3 +73,7 @@ class FileStorage:
         if obj is not None and to_delete in self.__objects:
             del self.__objects[to_delete]
             self.save()
+
+    def close(self):
+        """reloads"""
+        self.reload()

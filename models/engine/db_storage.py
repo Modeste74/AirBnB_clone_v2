@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """define a storage engine"""
-
+import sqlalchemy
 from os import environ
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -64,3 +64,7 @@ class DBStorage:
         Session = scoped_session(sessionmaker(
             bind=self.__engine, expire_on_commit=False))
         self.__session = Session()
+
+    def close(self):
+        """calls remove"""
+        self.__session.remove()
