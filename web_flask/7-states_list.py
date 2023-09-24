@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# uses storage to fetch data and display a html page
+"""uses storage to fetch data and display a html page"""
 from flask import Flask
 from flask import render_template
 from models import storage

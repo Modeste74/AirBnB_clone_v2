@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# uses storage to fetch data and display a html page
+"""uses storage to fetch data and display a html page"""
 from flask import Flask
 from flask import render_template
 from models import storage
@@ -15,8 +15,9 @@ def hbnb_filters():
     that scroll down while reflecting
     data from storage"""
     states = sorted(storage.all(State).values(), key=lambda state: state.name)
-    amenities = sorted(storage.all(Amenity).values(), key=lambda amenities: amenities.name)
-    return render_template('10-hbnb_filters.html', states=states, amenities=amenities)
+    amt = sorted(storage.all(Amenity).values(), key=lambda amt: amt.name)
+    return render_template('10-hbnb_filters.html', states=states, amt=amt)
+
 
 @app.teardown_appcontext
 def teardown(exception):
