@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""uses flask to start a web application"""
 from flask import Flask
 """creates an instance of flask"""
 app = Flask(__name__)
